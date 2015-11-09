@@ -55,6 +55,7 @@ public class DatabaseAdapterTest extends AndroidTestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
+        dba.deleteAllItems();
         dba.close();
     }
 }
