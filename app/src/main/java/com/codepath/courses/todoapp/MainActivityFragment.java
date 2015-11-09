@@ -41,7 +41,7 @@ public class MainActivityFragment extends Fragment {
         listView.setAdapter(itemsAdapter);
         editText = (EditText) rootView.findViewById(R.id.editText);
 
-        rootView.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("Item entered: " + editText.getText().toString());
