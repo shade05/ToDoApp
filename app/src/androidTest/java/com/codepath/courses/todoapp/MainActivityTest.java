@@ -28,5 +28,6 @@ public class MainActivityTest {
         Espresso.onView(AllOf.allOf(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), ViewMatchers.withId(R.id.addButton))).
                 perform(ViewActions.click());
 
+
     }
 }
