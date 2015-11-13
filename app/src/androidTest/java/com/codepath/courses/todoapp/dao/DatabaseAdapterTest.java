@@ -2,54 +2,66 @@ package com.codepath.courses.todoapp.dao;
 
 import android.test.AndroidTestCase;
 
+import com.codepath.courses.todoapp.domain.ToDoItem;
+
 import java.util.List;
 
 public class DatabaseAdapterTest extends AndroidTestCase {
-    private static final String FIRST_ITEM = "First Item";
-    private static final String SECOND_ITEM = "Second Item";
+    private static final String FIRST_ITEM = "First Item In test";
+    private static final String SECOND_ITEM = "Second Item In test";
     private DatabaseAdapter dba;
 
     @Override
     protected void setUp() throws Exception {
-        dba = new DatabaseAdapter(getContext());
+        DatabaseAdapter.init(getContext());
+        dba = DatabaseAdapter.getInstance();
         dba.open();
         dba.deleteAllItems();
     }
 
-    public void testInsertAndGetAllItems() {
-        dba.insertItem(FIRST_ITEM);
-        dba.insertItem(SECOND_ITEM);
-        List<String> names = dba.getAllItems();
-        assertTrue(names.contains(FIRST_ITEM));
-        assertTrue(names.contains(SECOND_ITEM));
+    public void testInsert() {
+        dba.insertToDoItem(FIRST_ITEM);
+        dba.insertToDoItem(SECOND_ITEM);
+        List<ToDoItem> items = dba.getAllToDoItems();
+        assertTrue(found(items, FIRST_ITEM) == true);
+        assertTrue(found(items, SECOND_ITEM) == true);
     }
 
-    public void testExceptionForEmptyName() {
+    private boolean found(List<ToDoItem> items, String title) {
+        for (ToDoItem item : items) {
+            if (item.getTitle().equals(title)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void testUpdate() {
+        final long _id = dba.insertToDoItem(FIRST_ITEM);
+        String modifiedTitle = "Modified First title";
+        dba.updateToDoItem((int) _id, modifiedTitle);
+        List<ToDoItem> items = dba.getAllToDoItems();
+        assertTrue(found(items, modifiedTitle) == true);
+    }
+
+    public void testCheckForEmptyTitle() {
         try {
-            dba.insertItem("");
+            dba.insertToDoItem("");
             fail("Should never get here");
         } catch (IllegalArgumentException e) {
             assertEquals("Item must not be empty", e.getMessage());
         }
     }
 
-    public void testDeleteName() {
-        int count = dba.getAllItems().size();
-        dba.insertItem(FIRST_ITEM);
-        assertEquals(count + 1, dba.getAllItems().size());
+    public void testDelete() {
+        int count = dba.getAllToDoItems().size();
+        final long _id = dba.insertToDoItem(FIRST_ITEM);
+        List<ToDoItem> toDoItems = dba.getAllToDoItems();
+        assertEquals(count + 1, toDoItems.size());
 
-        dba.deleteItem(FIRST_ITEM);
-        assertEquals(count, dba.getAllItems().size());
-    }
-
-    public void testExists() {
-        assertFalse(dba.getAllItems().contains(FIRST_ITEM));
-
-        dba.insertItem(FIRST_ITEM);
-        assertTrue(dba.getAllItems().contains(FIRST_ITEM));
-
-        dba.deleteItem(FIRST_ITEM);
-        assertFalse(dba.getAllItems().contains(FIRST_ITEM));
+        dba.deleteToDoItem((int) _id);
+        toDoItems = dba.getAllToDoItems();
+        assertEquals(count, toDoItems.size());
     }
 
     @Override

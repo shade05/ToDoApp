@@ -5,15 +5,26 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.codepath.courses.todoapp.domain.ToDoItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseAdapter {
+    private static DatabaseAdapter databaseAdapter;
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
 
-    public DatabaseAdapter(Context context) {
+    private DatabaseAdapter(Context context) {
         dbHelper = new DatabaseHelper(context.getApplicationContext());
+    }
+
+    public static void init(Context context) {
+        databaseAdapter = new DatabaseAdapter(context);
+    }
+
+    public static DatabaseAdapter getInstance() {
+        return databaseAdapter;
     }
 
     public DatabaseAdapter open() {
@@ -26,33 +37,39 @@ public class DatabaseAdapter {
     }
 
     private Cursor getAllEntries() {
-        String[] columns = new String[1];
-        columns[0] = "title";
+        String[] columns = new String[2];
+        columns[0] = "_id";
+        columns[1] = "title";
         return database.query("to_do_items", columns, null, null, null, null, null);
     }
 
-    public List<String> getAllItems() {
-        ArrayList<String> items = new ArrayList<>();
+    public List<ToDoItem> getAllToDoItems() {
+        ArrayList<ToDoItem> items = new ArrayList<>();
         Cursor cursor = getAllEntries();
         if (cursor.moveToFirst()) {
             do {
-                items.add(cursor.getString(0));
+                System.out.println("id: " + cursor.getInt(0) + ", title: " + cursor.getString(1));
+                ToDoItem toDoItem = new ToDoItem();
+                toDoItem.setId(cursor.getInt(0));
+                toDoItem.setTitle(cursor.getString(1));
+                items.add(toDoItem);
             } while (cursor.moveToNext());
         }
         cursor.close();
         return items;
     }
 
-    public boolean exists(String name) {
+    public boolean exists(String title) {
         Cursor cursor = database.rawQuery(
                 "select title from to_do_items where title=?",
-                new String[]{name});
+                new String[]{title});
         boolean yes = cursor.getCount() >= 1;
         cursor.close();
         return yes;
     }
 
-    public long insertItem(String title) {
+    public long insertToDoItem(String title) {
+        System.out.println("title is : " + title);
         if (title.length() == 0) {
             throw new IllegalArgumentException("Item must not be empty");
         }
@@ -61,10 +78,10 @@ public class DatabaseAdapter {
         return database.insert("to_do_items", null, values);
     }
 
-    public int deleteItem(String name) {
-        String whereClause = "title = ?";
+    public int deleteToDoItem(Integer _id) {
+        String whereClause = "_id = ?";
         String[] whereArgs = new String[1];
-        whereArgs[0] = name;
+        whereArgs[0] = _id.toString();
         return database.delete("to_do_items", whereClause, whereArgs);
     }
 
@@ -72,10 +89,10 @@ public class DatabaseAdapter {
         return database.delete("to_do_items", null, null);
     }
 
-    public int updateItem(String title) {
-        String whereClause = "tile = ?";
+    public int updateToDoItem(Integer id, String title) {
+        String whereClause = "_id = ?";
         String[] whereArgs = new String[1];
-        whereArgs[0] = title;
+        whereArgs[0] = id.toString();
         ContentValues values = new ContentValues();
         values.put("title", title);
         return database.update("to_do_items", values, whereClause, whereArgs);
