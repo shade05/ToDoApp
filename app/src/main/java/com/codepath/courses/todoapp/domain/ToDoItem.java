@@ -30,9 +30,6 @@ public class ToDoItem implements Serializable {
 
     @Override
     public String toString() {
-        return "ToDoItem{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
+        return title;
     }
 }

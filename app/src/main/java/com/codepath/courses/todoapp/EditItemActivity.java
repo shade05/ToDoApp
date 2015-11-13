@@ -65,7 +65,7 @@ public class EditItemActivity extends AppCompatActivity {
                 databaseAdapter.updateToDoItem(toDoItem.getId(), title);
                 toDoItem.setTitle(title);
                 System.out.println("Item entered: " + editItemText.getText().toString());
-                editItemText.setText("");
+                onBackPressed();
             }
         });
     }

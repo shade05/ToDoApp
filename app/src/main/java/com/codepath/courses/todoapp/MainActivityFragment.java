@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.courses.todoapp.dao.DatabaseAdapter;
 import com.codepath.courses.todoapp.domain.ToDoItem;
@@ -45,7 +46,12 @@ public class MainActivityFragment extends Fragment {
         rootView.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Item entered: " + editText.getText().toString());
+                String title = editText.getText().toString().trim();
+                if (title == null || title.equals("")) {
+                    Toast.makeText(getActivity(), "Empty title", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                System.out.println("Item entered: " + title);
                 long _id = databaseAdapter.insertToDoItem(editText.getText().toString());
                 ToDoItem toDoItem = new ToDoItem();
                 toDoItem.setId((int) _id);
@@ -85,5 +91,13 @@ public class MainActivityFragment extends Fragment {
         if (items == null)
             items = new ArrayList<>();
         return items;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        items = populateItems();
+        itemsAdapter = new ArrayAdapter<ToDoItem>(getActivity(), android.R.layout.simple_list_item_1, items);
+        listView.setAdapter(itemsAdapter);
     }
 }
