@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,7 +23,7 @@ public class MainActivityFragment extends Fragment {
 
     private DatabaseAdapter databaseAdapter;
     private List<ToDoItem> items;
-    private ArrayAdapter<ToDoItem> itemsAdapter;
+    private ListViewAdapter itemsAdapter;
     private EditText editText;
     private ListView listView;
 
@@ -39,7 +38,7 @@ public class MainActivityFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView);
         items = populateItems();
-        itemsAdapter = new ArrayAdapter<ToDoItem>(getActivity(), android.R.layout.simple_list_item_1, items);
+        itemsAdapter = new ListViewAdapter(items, getActivity());
         listView.setAdapter(itemsAdapter);
         editText = (EditText) rootView.findViewById(R.id.editText);
 
@@ -56,7 +55,8 @@ public class MainActivityFragment extends Fragment {
                 ToDoItem toDoItem = new ToDoItem();
                 toDoItem.setId((int) _id);
                 toDoItem.setTitle(editText.getText().toString());
-                itemsAdapter.add(toDoItem);
+                itemsAdapter.getToDoItems().add(toDoItem);
+                itemsAdapter.notifyDataSetChanged();
                 editText.setText("");
                 System.out.println("Items in array: " + items);
             }
@@ -97,7 +97,7 @@ public class MainActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
         items = populateItems();
-        itemsAdapter = new ArrayAdapter<ToDoItem>(getActivity(), android.R.layout.simple_list_item_1, items);
+        itemsAdapter = new ListViewAdapter(items, getActivity());
         listView.setAdapter(itemsAdapter);
     }
 }
