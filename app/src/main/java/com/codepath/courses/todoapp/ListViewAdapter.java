@@ -25,10 +25,6 @@ public class ListViewAdapter extends BaseAdapter {
         return toDoItems;
     }
 
-    public void setToDoItems(final List<ToDoItem> toDoItems) {
-        this.toDoItems = toDoItems;
-    }
-
     @Override
     public int getCount() {
         return toDoItems.size();
@@ -46,18 +42,28 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup arg2) {
+        ViewHolder viewHolder;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item, arg2, false);
+            viewHolder = new ViewHolder(view);
+            view.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) view.getTag();
         }
-
-        TextView chapterName = (TextView) view.findViewById(R.id.textView1);
 
         ToDoItem toToItem = toDoItems.get(position);
 
-        chapterName.setText(toToItem.getTitle());
+        viewHolder.textView.setText(toToItem.getTitle());
 
         return view;
     }
 
+    private static class ViewHolder {
+        final TextView textView;
+
+        public ViewHolder(View view) {
+            textView = (TextView) view.findViewById(R.id.textView1);
+        }
+    }
 }
