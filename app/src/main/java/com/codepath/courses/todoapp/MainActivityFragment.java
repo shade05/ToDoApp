@@ -47,7 +47,7 @@ public class MainActivityFragment extends Fragment {
             public void onClick(View v) {
                 String title = editText.getText().toString().trim();
                 if (title == null || title.equals("")) {
-                    Toast.makeText(getActivity(), "Empty title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.empty_title, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 System.out.println("Item entered: " + title);

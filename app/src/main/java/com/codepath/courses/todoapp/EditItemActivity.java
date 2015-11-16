@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,12 @@ public class EditItemActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_edit_item);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.edit_item_title);
+        }
+
         toDoItem = (ToDoItem) getIntent().getSerializableExtra(INTENT_ITEM_STRING);
         System.out.println("item value in onCreate is " + toDoItem);
         if (toDoItem == null || TextUtils.isEmpty(toDoItem.getTitle())) {
@@ -59,7 +66,7 @@ public class EditItemActivity extends AppCompatActivity {
                 String title = editItemText.getText().toString().trim();
                 System.out.println("Item entered: " + editItemText.getText().toString());
                 if (title == null || title.equals("")) {
-                    Toast.makeText(EditItemActivity.this, "Empty title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditItemActivity.this, R.string.empty_title, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 databaseAdapter.updateToDoItem(toDoItem.getId(), title);
