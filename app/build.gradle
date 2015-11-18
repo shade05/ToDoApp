@@ -27,6 +27,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:support-annotations:23.1.0'
+    compile 'nl.qbusict:cupboard:2.1.4'
 
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {

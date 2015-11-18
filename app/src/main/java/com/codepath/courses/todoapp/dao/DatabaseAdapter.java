@@ -50,7 +50,7 @@ public class DatabaseAdapter {
             do {
                 System.out.println("id: " + cursor.getInt(0) + ", title: " + cursor.getString(1));
                 ToDoItem toDoItem = new ToDoItem();
-                toDoItem.setId(cursor.getInt(0));
+                toDoItem.set_id(cursor.getLong(0));
                 toDoItem.setTitle(cursor.getString(1));
                 items.add(toDoItem);
             } while (cursor.moveToNext());
@@ -78,7 +78,7 @@ public class DatabaseAdapter {
         return database.insert("to_do_items", null, values);
     }
 
-    public int deleteToDoItem(Integer _id) {
+    public int deleteToDoItem(Long _id) {
         String whereClause = "_id = ?";
         String[] whereArgs = new String[1];
         whereArgs[0] = _id.toString();
@@ -89,7 +89,7 @@ public class DatabaseAdapter {
         return database.delete("to_do_items", null, null);
     }
 
-    public int updateToDoItem(Integer id, String title) {
+    public int updateToDoItem(Long id, String title) {
         String whereClause = "_id = ?";
         String[] whereArgs = new String[1];
         whereArgs[0] = id.toString();

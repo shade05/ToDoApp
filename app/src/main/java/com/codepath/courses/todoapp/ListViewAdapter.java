@@ -37,7 +37,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return toDoItems.get(position).getId();
+        return toDoItems.get(position).get_id();
     }
 
     @Override

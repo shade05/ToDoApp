@@ -2,7 +2,7 @@ package com.codepath.courses.todoapp;
 
 import android.app.Application;
 
-import com.codepath.courses.todoapp.dao.DatabaseAdapter;
+import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 
 /**
  * Created by deepaks on 11/12/15.
@@ -20,7 +20,7 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        DatabaseAdapter.init(getApplicationContext());
+        ToDoItemDao.init(getApplicationContext());
         mInstance = this;
     }
 }

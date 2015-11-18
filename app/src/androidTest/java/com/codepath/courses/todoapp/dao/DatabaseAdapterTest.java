@@ -39,7 +39,7 @@ public class DatabaseAdapterTest extends AndroidTestCase {
     public void testUpdate() {
         final long _id = dba.insertToDoItem(FIRST_ITEM);
         String modifiedTitle = "Modified First title";
-        dba.updateToDoItem((int) _id, modifiedTitle);
+        dba.updateToDoItem(_id, modifiedTitle);
         List<ToDoItem> items = dba.getAllToDoItems();
         assertTrue(found(items, modifiedTitle) == true);
     }
@@ -59,7 +59,7 @@ public class DatabaseAdapterTest extends AndroidTestCase {
         List<ToDoItem> toDoItems = dba.getAllToDoItems();
         assertEquals(count + 1, toDoItems.size());
 
-        dba.deleteToDoItem((int) _id);
+        dba.deleteToDoItem(_id);
         toDoItems = dba.getAllToDoItems();
         assertEquals(count, toDoItems.size());
     }

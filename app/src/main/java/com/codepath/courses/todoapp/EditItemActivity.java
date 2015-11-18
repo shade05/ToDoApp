@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.codepath.courses.todoapp.dao.DatabaseAdapter;
+import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
 
 public class EditItemActivity extends AppCompatActivity {
@@ -22,7 +22,7 @@ public class EditItemActivity extends AppCompatActivity {
 
     private Button editButton;
 
-    private DatabaseAdapter databaseAdapter;
+    private ToDoItemDao toDoItemDao;
 
     private ToDoItem toDoItem;
 
@@ -40,7 +40,7 @@ public class EditItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        databaseAdapter = DatabaseAdapter.getInstance();
+        toDoItemDao = ToDoItemDao.getInstance();
 
         setContentView(R.layout.activity_edit_item);
 
@@ -69,9 +69,8 @@ public class EditItemActivity extends AppCompatActivity {
                     Toast.makeText(EditItemActivity.this, R.string.empty_title, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                databaseAdapter.updateToDoItem(toDoItem.getId(), title);
                 toDoItem.setTitle(title);
-                System.out.println("Item entered: " + editItemText.getText().toString());
+                toDoItemDao.update(toDoItem);
                 onBackPressed();
             }
         });

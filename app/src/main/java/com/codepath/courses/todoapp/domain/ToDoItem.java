@@ -7,17 +7,22 @@ import java.io.Serializable;
  */
 public class ToDoItem implements Serializable {
 
-    private Integer id;
+    private Long _id;
 
     private String title;
 
+    private String description;
 
-    public Integer getId() {
-        return id;
+    private String status;
+
+    private String dateTime;
+
+    public Long get_id() {
+        return _id;
     }
 
-    public void setId(final Integer id) {
-        this.id = id;
+    public void set_id(final Long id) {
+        this._id = id;
     }
 
     public String getTitle() {
@@ -28,8 +33,38 @@ public class ToDoItem implements Serializable {
         this.title = title;
     }
 
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(final String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(final String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return title;
+        return "ToDoItem{" +
+                "dateTime='" + dateTime + '\'' +
+                ", id=" + _id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

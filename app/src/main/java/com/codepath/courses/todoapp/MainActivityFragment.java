@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.codepath.courses.todoapp.dao.DatabaseAdapter;
+import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class MainActivityFragment extends Fragment {
 
-    private DatabaseAdapter databaseAdapter;
+    private ToDoItemDao toDoItemDao;
     private List<ToDoItem> items;
     private ListViewAdapter itemsAdapter;
     private EditText editText;
@@ -33,8 +33,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        databaseAdapter = DatabaseAdapter.getInstance();
-        databaseAdapter.open();
+        toDoItemDao = ToDoItemDao.getInstance();
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView);
         items = populateItems();
@@ -51,9 +50,10 @@ public class MainActivityFragment extends Fragment {
                     return;
                 }
                 System.out.println("Item entered: " + title);
-                long _id = databaseAdapter.insertToDoItem(editText.getText().toString());
                 ToDoItem toDoItem = new ToDoItem();
-                toDoItem.setId((int) _id);
+                toDoItem.setTitle(editText.getText().toString());
+                long _id = toDoItemDao.save(toDoItem);
+                toDoItem.set_id(_id);
                 toDoItem.setTitle(editText.getText().toString());
                 itemsAdapter.getToDoItems().add(toDoItem);
                 itemsAdapter.notifyDataSetChanged();
@@ -67,7 +67,7 @@ public class MainActivityFragment extends Fragment {
             public boolean onItemLongClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
                 final ToDoItem removedItem = items.remove(i);
                 itemsAdapter.notifyDataSetChanged();
-                databaseAdapter.deleteToDoItem(removedItem.getId());
+                toDoItemDao.delete(removedItem.get_id());
                 return true;
             }
         });
@@ -86,7 +86,7 @@ public class MainActivityFragment extends Fragment {
 
     private List<ToDoItem> populateItems() {
         List<ToDoItem> items = null;
-        items = databaseAdapter.getAllToDoItems();
+        items = toDoItemDao.getAllToDoItems();
         System.out.println("items retrieved: " + items);
         if (items == null)
             items = new ArrayList<>();

@@ -4,9 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.codepath.courses.todoapp.domain.ToDoItem;
+
+import static nl.qbusict.cupboard.CupboardFactory.cupboard;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "to_do_app.db";
+    private static final String DATABASE_NAME = "to_do_items.db";
     private static final int VERSION = 1;
+
+    static {
+        cupboard().register(ToDoItem.class);
+    }
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -14,12 +22,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE TO_DO_ITEMS( _id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT);");
+        cupboard().withDatabase(db).createTables();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS TO_DO_ITEMS;");
-        onCreate(db);
+        cupboard().withDatabase(db).upgradeTables();
     }
 }
