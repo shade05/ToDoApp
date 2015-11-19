@@ -14,15 +14,19 @@ import com.codepath.courses.todoapp.domain.ToDoItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
 
+    @Bind(R.id.listView)
+    protected ListView listView;
     private ToDoItemDao toDoItemDao;
     private List<ToDoItem> items;
     private ListViewAdapter itemsAdapter;
-    private ListView listView;
 
 
     public MainActivityFragment() {
@@ -33,7 +37,8 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         toDoItemDao = ToDoItemDao.getInstance();
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        listView = (ListView) rootView.findViewById(R.id.listView);
+
+        ButterKnife.bind(this, rootView);
 
         items = populateItems();
         itemsAdapter = new ListViewAdapter(items, getActivity());

@@ -12,17 +12,25 @@ import android.widget.Toast;
 import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class AddToDoItemActivity extends AppCompatActivity {
 
-    private EditText editTitle;
+    @Bind(R.id.editAddTitle)
+    protected EditText editTitle;
 
-    private EditText editDescription;
+    @Bind(R.id.editDescription)
+    protected EditText editDescription;
 
-    private EditText editDueDate;
+    @Bind(R.id.editDueDate)
+    protected EditText editDueDate;
 
-    private EditText editStatus;
+    @Bind(R.id.editStatus)
+    protected EditText editStatus;
 
-    private Button addButton;
+    @Bind(R.id.addToDoItemButton)
+    protected Button addButton;
 
     private ToDoItemDao toDoItemDao;
 
@@ -40,11 +48,7 @@ public class AddToDoItemActivity extends AppCompatActivity {
 
         toDoItemDao = ToDoItemDao.getInstance();
 
-        editTitle = (EditText) findViewById(R.id.editAddTitle);
-        editDescription = (EditText) findViewById(R.id.editDescription);
-        editDueDate = (EditText) findViewById(R.id.editDueDate);
-        editStatus = (EditText) findViewById(R.id.editStatus);
-        addButton = (Button) findViewById(R.id.addToDoItemButton);
+        ButterKnife.bind(this);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

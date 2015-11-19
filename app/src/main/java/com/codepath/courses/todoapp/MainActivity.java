@@ -8,9 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView addToDoItemImage;
+    @Bind(R.id.addToDoItemImage)
+    protected ImageView addToDoItemImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainActivityToolbar);
         setSupportActionBar(toolbar);
-        addToDoItemImage = (ImageView) findViewById(R.id.addToDoItemImage);
+        ButterKnife.bind(this);
+
         addToDoItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

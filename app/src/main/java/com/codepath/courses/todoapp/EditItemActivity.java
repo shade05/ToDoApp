@@ -14,19 +14,27 @@ import android.widget.Toast;
 import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class EditItemActivity extends AppCompatActivity {
 
     public static final String INTENT_ITEM_STRING = EditItemActivity.class.getPackage() + ".item";
 
-    private EditText editTitle;
+    @Bind(R.id.editUpdateTitle)
+    protected EditText editTitle;
 
-    private EditText editDescription;
+    @Bind(R.id.editUpdateDescription)
+    protected EditText editDescription;
 
-    private EditText editDueDate;
+    @Bind(R.id.editUpdateDueDate)
+    protected EditText editDueDate;
 
-    private EditText editStatus;
+    @Bind(R.id.editUpdateStatus)
+    protected EditText editStatus;
 
-    private Button editButton;
+    @Bind(R.id.editButton)
+    protected Button editButton;
 
     private ToDoItemDao toDoItemDao;
 
@@ -62,13 +70,9 @@ public class EditItemActivity extends AppCompatActivity {
             throw new IllegalStateException("Required item value not found");
         }
 
-        editTitle = (EditText) findViewById(R.id.editUpdateTitle);
-        editDescription = (EditText) findViewById(R.id.editUpdateDescription);
-        editDueDate = (EditText) findViewById(R.id.editUpdateDueDate);
-        editStatus = (EditText) findViewById(R.id.editUpdateStatus);
-        updateUI(toDoItem);
-        editButton = (Button) findViewById(R.id.editButton);
+        ButterKnife.bind(this);
 
+        updateUI(toDoItem);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
