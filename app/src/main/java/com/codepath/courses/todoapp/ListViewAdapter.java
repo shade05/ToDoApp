@@ -54,16 +54,19 @@ public class ListViewAdapter extends BaseAdapter {
 
         ToDoItem toToItem = toDoItems.get(position);
 
-        viewHolder.textView.setText(toToItem.getTitle());
+        viewHolder.titleTextView.setText(toToItem.getTitle());
+        viewHolder.statusTextView.setText(toToItem.getStatus());
 
         return view;
     }
 
     private static class ViewHolder {
-        final TextView textView;
+        final TextView titleTextView;
+        final TextView statusTextView;
 
         public ViewHolder(View view) {
-            textView = (TextView) view.findViewById(R.id.textView1);
+            titleTextView = (TextView) view.findViewById(R.id.titleTextView);
+            statusTextView = (TextView) view.findViewById(R.id.statusTextView);
         }
     }
 }

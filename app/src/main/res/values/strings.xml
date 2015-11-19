@@ -8,4 +8,8 @@
     <string name="edit_item">Edit Item Below</string>
     <string name="edit_item_title">Edit Item</string>
     <string name="empty_title">Empty title</string>
+    <string name="add_item_title">Title</string>
+    <string name="empty_description">Enter Description</string>
+    <string name="empty_due_date">Enter Due Date</string>
+    <string name="empty_status">Enter status</string>
 </resources>

@@ -5,15 +5,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ImageView addToDoItemImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mainActivityToolbar);
         setSupportActionBar(toolbar);
+        addToDoItemImage = (ImageView) findViewById(R.id.addToDoItemImage);
+        addToDoItemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(AddToDoItemActivity.getIntent(MainActivity.this));
+            }
+        });
     }
 
     @Override

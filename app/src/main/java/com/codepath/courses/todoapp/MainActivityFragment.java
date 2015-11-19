@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
@@ -24,8 +22,8 @@ public class MainActivityFragment extends Fragment {
     private ToDoItemDao toDoItemDao;
     private List<ToDoItem> items;
     private ListViewAdapter itemsAdapter;
-    private EditText editText;
     private ListView listView;
+
 
     public MainActivityFragment() {
     }
@@ -36,31 +34,10 @@ public class MainActivityFragment extends Fragment {
         toDoItemDao = ToDoItemDao.getInstance();
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView);
+
         items = populateItems();
         itemsAdapter = new ListViewAdapter(items, getActivity());
         listView.setAdapter(itemsAdapter);
-        editText = (EditText) rootView.findViewById(R.id.editText);
-
-        rootView.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = editText.getText().toString().trim();
-                if (title == null || title.equals("")) {
-                    Toast.makeText(getActivity(), R.string.empty_title, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                System.out.println("Item entered: " + title);
-                ToDoItem toDoItem = new ToDoItem();
-                toDoItem.setTitle(editText.getText().toString());
-                long _id = toDoItemDao.save(toDoItem);
-                toDoItem.set_id(_id);
-                toDoItem.setTitle(editText.getText().toString());
-                itemsAdapter.getToDoItems().add(toDoItem);
-                itemsAdapter.notifyDataSetChanged();
-                editText.setText("");
-                System.out.println("Items in array: " + items);
-            }
-        });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
