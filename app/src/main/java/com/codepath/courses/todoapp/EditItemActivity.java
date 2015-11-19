@@ -18,7 +18,13 @@ public class EditItemActivity extends AppCompatActivity {
 
     public static final String INTENT_ITEM_STRING = EditItemActivity.class.getPackage() + ".item";
 
-    private EditText editItemText;
+    private EditText editTitle;
+
+    private EditText editDescription;
+
+    private EditText editDueDate;
+
+    private EditText editStatus;
 
     private Button editButton;
 
@@ -56,23 +62,70 @@ public class EditItemActivity extends AppCompatActivity {
             throw new IllegalStateException("Required item value not found");
         }
 
-        editItemText = (EditText) findViewById(R.id.editItemText);
+        editTitle = (EditText) findViewById(R.id.editUpdateTitle);
+        editDescription = (EditText) findViewById(R.id.editUpdateDescription);
+        editDueDate = (EditText) findViewById(R.id.editUpdateDueDate);
+        editStatus = (EditText) findViewById(R.id.editUpdateStatus);
+        updateUI(toDoItem);
         editButton = (Button) findViewById(R.id.editButton);
-        editItemText.setText(toDoItem.getTitle());
+
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = editItemText.getText().toString().trim();
-                System.out.println("Item entered: " + editItemText.getText().toString());
-                if (title == null || title.equals("")) {
-                    Toast.makeText(EditItemActivity.this, R.string.empty_title, Toast.LENGTH_SHORT).show();
+                boolean updated = updateToDoItem();
+                if (!updated) {
                     return;
                 }
-                toDoItem.setTitle(title);
                 toDoItemDao.update(toDoItem);
                 onBackPressed();
             }
         });
+    }
+
+    private boolean updateToDoItem() {
+
+        String value = null;
+        value = checkEditText(editTitle, R.string.empty_title);
+        if (value == null) {
+            return false;
+        }
+        toDoItem.setTitle(value);
+        value = checkEditText(editDescription, R.string.empty_description);
+        if (value == null) {
+            return false;
+        }
+        toDoItem.setDescription(value);
+        value = checkEditText(editDueDate, R.string.empty_due_date);
+        if (value == null) {
+            return false;
+        }
+        toDoItem.setDateTime(value);
+        value = checkEditText(editStatus, R.string.empty_status);
+        if (value == null) {
+            return false;
+        }
+
+        toDoItem.setStatus(value);
+
+        return true;
+    }
+
+    private void updateUI(ToDoItem toDoItem) {
+        editTitle.setText(toDoItem.getTitle());
+        editDescription.setText(toDoItem.getDescription());
+        editDueDate.setText(toDoItem.getDateTime());
+        editStatus.setText(toDoItem.getStatus());
+    }
+
+    private String checkEditText(EditText editText, int errorCode) {
+        String value = editText.getText().toString().trim();
+
+        if (value == null || value.equals("")) {
+            Toast.makeText(EditItemActivity.this, errorCode, Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        return value;
     }
 }

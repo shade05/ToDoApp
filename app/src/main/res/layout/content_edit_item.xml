@@ -13,16 +13,88 @@
     tools:context="com.codepath.courses.todoapp.EditItemActivity"
     tools:showIn="@layout/activity_edit_item">
 
-    <EditText
-        android:id="@+id/editItemText"
+    <TextView
+        android:id="@+id/addItemTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="46dp"/>
+        android:layout_gravity="fill_horizontal"
+        android:text="@string/add_item_title"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+
+    <EditText
+        android:id="@+id/editUpdateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editUpdateDescription"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/editUpdateDescription"
+        android:layout_gravity="fill_horizontal"
+        android:hint="Add Title..."/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/addItemTitle"
+        android:layout_gravity="fill_horizontal"
+        android:text="Description"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+
+    <EditText
+        android:id="@+id/editUpdateDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="fill_horizontal"
+        android:hint="Add Description..."/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editUpdateDescription"
+        android:layout_gravity="fill_horizontal"
+        android:text="Due Date"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+
+    <EditText
+        android:id="@+id/editUpdateDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editUpdateDescription"
+        android:layout_alignStart="@+id/editUpdateDescription"
+        android:layout_below="@+id/editUpdateDescription"
+        android:layout_gravity="fill_horizontal"
+        android:hint="Add Due Date..."/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editUpdateDueDate"
+        android:layout_gravity="fill_horizontal"
+        android:text="Status"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+
+    <EditText
+        android:id="@+id/editUpdateStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignLeft="@+id/editUpdateDueDate"
+        android:layout_alignStart="@+id/editUpdateDueDate"
+        android:layout_gravity="fill_horizontal"
+        android:hint="Add Status..."/>
 
     <Button
         android:id="@+id/editButton"
@@ -30,17 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editItemText"
+        android:layout_below="@+id/editUpdateStatus"
         android:text="@string/edit_button"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/edit_item"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 </RelativeLayout>
