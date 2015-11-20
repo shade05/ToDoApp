@@ -14,6 +14,8 @@ import com.codepath.courses.todoapp.domain.ToDoItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -24,7 +26,8 @@ public class MainActivityFragment extends Fragment {
 
     @Bind(R.id.listView)
     protected ListView listView;
-    private ToDoItemDao toDoItemDao;
+    @Inject
+    ToDoItemDao toDoItemDao;
     private List<ToDoItem> items;
     private ListViewAdapter itemsAdapter;
 
@@ -35,7 +38,10 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        toDoItemDao = ToDoItemDao.getInstance();
+
+        ((AppController) getActivity().getApplication()).getAppComponent().inject(this);
+
+        //toDoItemDao = ToDoItemDao.getInstance();
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         ButterKnife.bind(this, rootView);

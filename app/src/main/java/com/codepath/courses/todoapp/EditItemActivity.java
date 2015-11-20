@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -36,7 +38,8 @@ public class EditItemActivity extends AppCompatActivity {
     @Bind(R.id.editButton)
     protected Button editButton;
 
-    private ToDoItemDao toDoItemDao;
+    @Inject
+    ToDoItemDao toDoItemDao;
 
     private ToDoItem toDoItem;
 
@@ -54,7 +57,9 @@ public class EditItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        toDoItemDao = ToDoItemDao.getInstance();
+        ((AppController) getApplication()).getAppComponent().inject(this);
+
+        //toDoItemDao = ToDoItemDao.getInstance();
 
         setContentView(R.layout.activity_edit_item);
 

@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -32,7 +34,8 @@ public class AddToDoItemActivity extends AppCompatActivity {
     @Bind(R.id.addToDoItemButton)
     protected Button addButton;
 
-    private ToDoItemDao toDoItemDao;
+    @Inject
+    ToDoItemDao toDoItemDao;
 
     public static Intent getIntent(Context context) {
         final Intent intent = new Intent(context, AddToDoItemActivity.class);
@@ -45,8 +48,8 @@ public class AddToDoItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_do_item);
 
-
-        toDoItemDao = ToDoItemDao.getInstance();
+        ((AppController) getApplication()).getAppComponent().inject(this);
+        //toDoItemDao = ToDoItemDao.getInstance();
 
         ButterKnife.bind(this);
 
