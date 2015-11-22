@@ -97,10 +97,14 @@ public class AddToDoItemActivity extends AppCompatActivity {
 
     private String checkEditText(EditText editText, int errorCode) {
         String value = editText.getText().toString().trim();
+        editText.setError(getApplicationContext().getString(errorCode));
 
         if (value == null || value.equals("")) {
+            editText.setError(getApplicationContext().getString(errorCode));
             Toast.makeText(AddToDoItemActivity.this, errorCode, Toast.LENGTH_SHORT).show();
             return null;
+        } else {
+            editText.setError(null);
         }
 
         return value;
