@@ -8,7 +8,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private boolean _active = true;
     // milliseconds
-    private int _splashTime = 5000;
+    private int _splashTime = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,6 +2,7 @@ package com.codepath.courses.todoapp;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
+import com.codepath.courses.todoapp.dialog.MyAlertDialogFragment;
 import com.codepath.courses.todoapp.domain.ToDoItem;
 
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ import butterknife.ButterKnife;
  */
 public class MainActivityFragment extends Fragment {
 
+    public static final int MAIN_ACTIVITY_FRAGMENT = 1;
+    private final static int SINGLE_DELETE = 0;
     @Bind(R.id.listView)
     protected ListView listView;
     @Inject
@@ -52,10 +56,8 @@ public class MainActivityFragment extends Fragment {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
-                final ToDoItem removedItem = items.remove(i);
-                itemsAdapter.notifyDataSetChanged();
-                toDoItemDao.delete(removedItem.get_id());
+            public boolean onItemLongClick(final AdapterView<?> adapterView, final View view, final int position, final long l) {
+                show(position);
                 return true;
             }
         });
@@ -70,6 +72,18 @@ public class MainActivityFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    public void removeToDoItem(int position) {
+        final ToDoItem removedItem = items.remove(position);
+        itemsAdapter.notifyDataSetChanged();
+        toDoItemDao.delete(removedItem.get_id());
+    }
+
+    private void show(int position) {
+        AppCompatDialogFragment dialogFragment = MyAlertDialogFragment.newInstance(SINGLE_DELETE, position);
+        dialogFragment.setTargetFragment(this, MAIN_ACTIVITY_FRAGMENT);
+        dialogFragment.show(getFragmentManager(), null);
     }
 
     private List<ToDoItem> populateItems() {

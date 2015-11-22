@@ -12,4 +12,10 @@
     <string name="empty_description">Enter Description</string>
     <string name="empty_due_date">Enter Due Date</string>
     <string name="empty_status">Enter status</string>
+
+    <string name="delete_icon_desc_string">delete icon</string>
+    <string name="delete_all_dialog_string">Delete ToDoItem?</string>
+    <string name="confirm_warning">This operation cannot be undone.</string>
+    <string name="no_string">No</string>
+    <string name="yes_string">Yes</string>
 </resources>

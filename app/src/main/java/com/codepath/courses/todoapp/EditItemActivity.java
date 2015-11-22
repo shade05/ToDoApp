@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.codepath.courses.todoapp.dao.impl.ToDoItemDao;
 import com.codepath.courses.todoapp.domain.ToDoItem;
@@ -131,8 +130,11 @@ public class EditItemActivity extends AppCompatActivity {
         String value = editText.getText().toString().trim();
 
         if (value == null || value.equals("")) {
-            Toast.makeText(EditItemActivity.this, errorCode, Toast.LENGTH_SHORT).show();
+            editText.setError(getApplicationContext().getString(errorCode));
+            //Toast.makeText(EditItemActivity.this, errorCode, Toast.LENGTH_SHORT).show();
             return null;
+        } else {
+            editText.setError(null);
         }
 
         return value;
