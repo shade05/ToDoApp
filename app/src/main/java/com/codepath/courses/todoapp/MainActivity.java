@@ -5,16 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.addToDoItemImage)
-    protected ImageView addToDoItemImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
 
-        addToDoItemImage.setOnClickListener(new View.OnClickListener() {
+        /*addToDoItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(AddToDoItemActivity.getIntent(MainActivity.this));
             }
-        });
+        });*/
     }
 
     @Override
@@ -47,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.add_an_todoitem) {
+            startActivity(AddToDoItemActivity.getIntent(MainActivity.this));
             return true;
         }
 
